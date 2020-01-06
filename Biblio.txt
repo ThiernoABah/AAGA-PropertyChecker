@@ -1,0 +1,20 @@
+Outils permettant de faire du test de propriété pour different langage :
+
+Python :
+https://github.com/HypothesisWorks/hypothesis/tree/master/hypothesis-python
+
+Java :
+https://github.com/HypothesisWorks/hypothesis-java
+https://github.com/pholser/junit-quickcheck
+
+JavaScript :
+https://github.com/dubzzz/fast-check/blob/master/README.md
+
+Ruby : 
+https://github.com/HypothesisWorks/hypothesis/tree/master/hypothesis-ruby
+https://github.com/hayeah/rantly
+
+Ternary tree :
+https://en.wikipedia.org/wiki/Ternary_tree
+https://www.geeksforgeeks.org/ternary-search-tree/
+https://iq.opengenus.org/ternary-search-tree/
