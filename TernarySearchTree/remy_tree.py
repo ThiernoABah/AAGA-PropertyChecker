@@ -1,5 +1,11 @@
 import random
 import math
+import pprint
+from collections import deque
+
+from TernarySearchTree.RemyV2 import print_tree
+from TernarySearchTree.RemyV2 import RemyV2
+
 
 
 class Remy:
@@ -116,18 +122,34 @@ def delete(liste, item):
 def all_val(n):
     res = list()
     factN = math.factorial(n + 1)
-    for j in range(factN):
-        res.append([0 for i in range(n)])
 
-    for k in range(n):
-        cpt = 0
-        for j in range(factN):
-            res[j][k] = cpt
-            cpt += 1
-            if cpt != 0 and (cpt % (k + 2)) == 0:
-                cpt = 0
+    cpt = 0
+    tab = list()
+    for i in range(n):
+        tab.append(0)
+    for i in range(factN):
+        res.append(tab.copy())
+        for j in range(n):
+            if(tab[j] < j + 1):
+                tab[j] += 1
+                break
+            else:
+                tab[j] = 0
+
+
+    print("res : ", res)
+    print("res : ", len(res))
+    dicE = {}
+    for e in res:
+        if str(e) in dicE:
+            dicE[str(e)] += 1
+        else:
+            dicE[str(e)] = 1
+
+    for e in dicE:
+        if dicE[e] > 1:
+            print("ne fonctionne pas  !!!!!!!!!!!!!!!!!")
     return res
-
 
 def treeToStr(A: ArbreRemy, i=0):
     if A.arbre[i].FG == -1 and A.arbre[i].FD == -1:
@@ -137,20 +159,39 @@ def treeToStr(A: ArbreRemy, i=0):
         fd = A.arbre[i].FD
         return "(" + treeToStr(A, fg) + ")" + treeToStr(A, fd)
 
+def create_all_tree_remy(n):
+    nb_loop = 20000
+    res_remy2 = dict()
+    i = 0
+
+    while i < nb_loop:
+
+        tree_remy_v2 = RemyV2(n)
+        rpz2 = print_tree(tree_remy_v2)
+
+        if rpz2 in res_remy2:
+            res_remy2[rpz2] = res_remy2[rpz2] + 1
+        else:
+            res_remy2[rpz2] = 1
+
+        i += 1
+
+    return res_remy2
+
 
 def create_all_tree(n):
     res = dict()
 
     for perm in all_val(n):
         tree = ArbreRemy(n)
+
         tree.growingTree2(n, perm)
         rpz = treeToStr(tree)
-        if (rpz in res):
+        if rpz in res:
             res[rpz] = res[rpz] + 1
         else:
             res[rpz] = 1
-    return res
-
+    return  res
 
 remy = ArbreRemy(0)
 remy1 = ArbreRemy(10)
@@ -160,13 +201,14 @@ remy.growingTree(0)
 remy1.growingTree2(10, [0, 2, 1, 4, 3, 5, 0, 1, 7])
 remy2.growingTree2(10, [0, 2, 1, 4, 3, 5, 0, 1, 7])
 
-import pprint
-
 # print(remy1 == remy2)
 # pprint.pprint(remy2.arbre)
 
 # remy2 = ArbreRemy(2)
 # remy2.growingTree2(2, [0, 1])
 # print()
-# pprint.pprint(remy2.arbre)
-pprint.pprint(create_all_tree(3))
+remyVProf = create_all_tree(3)
+remyV2 = create_all_tree_remy(3)
+pprint.pprint(remyVProf)
+print()
+pprint.pprint(remyV2)
