@@ -1,6 +1,7 @@
 import random
 import math
 
+
 class Remy:
     FG = -12
     FD = -13
@@ -105,24 +106,25 @@ def permutation(liste):
     else:
         return [[x] + ys for x in liste for ys in permutation(delete(liste, x))]
 
+
 def delete(liste, item):
     lc = liste[:]
     lc.remove(item)
     return lc
 
+
 def all_val(n):
     res = list()
-    factN = math.factorial(n+1)
+    factN = math.factorial(n + 1)
     for j in range(factN):
         res.append([0 for i in range(n)])
-    print(res)
 
     for k in range(n):
         cpt = 0
         for j in range(factN):
             res[j][k] = cpt
             cpt += 1
-            if cpt != 0 and (cpt % (k+2)) == 0:
+            if cpt != 0 and (cpt % (k + 2)) == 0:
                 cpt = 0
     return res
 
@@ -135,20 +137,19 @@ def treeToStr(A: ArbreRemy, i=0):
         fd = A.arbre[i].FD
         return "(" + treeToStr(A, fg) + ")" + treeToStr(A, fd)
 
+
 def create_all_tree(n):
     res = dict()
 
     for perm in all_val(n):
         tree = ArbreRemy(n)
-        tree.growingTree2(n,perm)
+        tree.growingTree2(n, perm)
         rpz = treeToStr(tree)
-        if(rpz in res):
+        if (rpz in res):
             res[rpz] = res[rpz] + 1
         else:
             res[rpz] = 1
     return res
-
-
 
 
 remy = ArbreRemy(0)
@@ -164,9 +165,8 @@ import pprint
 # print(remy1 == remy2)
 # pprint.pprint(remy2.arbre)
 
-#remy2 = ArbreRemy(2)
-#remy2.growingTree2(2, [0, 1])
-#print()
-#pprint.pprint(remy2.arbre)
+# remy2 = ArbreRemy(2)
+# remy2.growingTree2(2, [0, 1])
+# print()
+# pprint.pprint(remy2.arbre)
 pprint.pprint(create_all_tree(3))
-
