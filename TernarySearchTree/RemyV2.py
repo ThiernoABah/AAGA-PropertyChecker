@@ -2,6 +2,7 @@ import math
 from collections import defaultdict
 from random import *
 
+
 class Rand48(object):
     def __init__(self, seed):
         if seed < 2 ** 40:
@@ -29,6 +30,7 @@ class Rand48(object):
         if n & (1 << 31):
             n -= 1 << 32
         return n
+
 
 class Rand48_(Rand48):
     def __init__(self, seed):
@@ -82,8 +84,6 @@ class BinaryTree(object):
         return "( " + str(self.left) + " " + str(self.right) + " )"
 
 
-
-
 rand48_ = Rand48_(randint(2 ** 40, 2 ** 48))
 
 
@@ -102,11 +102,11 @@ def RemyV2(n):
 
     idNodTree = [root, left, right]
 
-    while k <  n:
-        id_rand = randint(0, len(idNodTree)-1)
+    while k < n:
+        id_rand = randint(0, len(idNodTree) - 1)
         F = idNodTree[id_rand]
 
-        pleft = randint(0,1)
+        pleft = randint(0, 1)
 
         E = BinaryTree(father=F.father)
         if F.father:
@@ -118,7 +118,7 @@ def RemyV2(n):
 
         leaf = BinaryTree(father=E)
 
-        if pleft == 0:
+        if k % 2 == 0:
             E.set_left(F)
             E.set_right(leaf)
         else:
@@ -139,4 +139,3 @@ def print_tree(A):
     if A.left == False and A.right == False:
         return "eps"
     return "(" + print_tree(A.left) + ")" + print_tree(A.right)
-

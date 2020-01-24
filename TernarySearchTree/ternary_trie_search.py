@@ -1,5 +1,8 @@
 import random
 import ternary_trie as T3
+import numpy.random as nr
+
+l_of_words = None
 
 
 def construct_ternary(filename, nbMots):
@@ -46,20 +49,21 @@ def nbWord(treeA):
 def same(treeA, treeB):
     g = True
     if treeA.val != treeB.val and treeA.cle != treeB.cle:
-        return False;
+        return False
     if len(treeA.fils) != len(treeB.fils):
-        return False;
+        return False
     for a, b in zip(treeA.fils, treeB.fils):
         g = g and same(a, b)
     return g
 
+
 # NE PAS UTILISER
-def findBugUnion(filename, nbMots):
+def findBugUnion(filename, nb_mots):
     with open("Shakespeare/" + filename) as f:
         content = f.readlines()
     candidat = set()
     i = 0
-    while len(candidat) < nbMots:
+    while len(candidat) < nb_mots:
         candidat.add(content[i][:-1])
         i = i + 1
 
@@ -67,10 +71,10 @@ def findBugUnion(filename, nbMots):
     treeInsert = T3.cons(first)
     treeUnion = T3.cons(first)
     for m in candidat:
-        if (same(treeUnion, treeInsert) == False):
+        if not same(treeUnion, treeInsert):
             print("not same tree : same(treeUnion, treeInsert)")
             return
-        if (nbWord(treeUnion) != nbWord(treeInsert)):
+        if nbWord(treeUnion) != nbWord(treeInsert):
             print("not same tree : nbWord(treeUnion) != nbWord(treeInsert) ")
         following = T3.cons(m)
         treeUnion = T3.fusion(treeUnion, following)
@@ -120,12 +124,12 @@ def findBugUnion2(filename, filename2, nbMots):
     print(treeInsert3.affiche())
     print(treeUnion.affiche())
 
-    print(nbMotsInsert)
-    print(nbMotsUnion)
+    print("nbMotsInsert : ", nbMotsInsert)
+    print("nbMotsUnion : ", nbMotsUnion)
 
-    if (nbMotsUnion != nbMotsInsert):
+    if nbMotsUnion != nbMotsInsert:
         print("not same tree : nbWord(treeUnion) != nbWord(treeInsert) ")
 
 
-#print(construct_ternary_union("much_ado.txt", 15).affiche())
+# print(construct_ternary_union("much_ado.txt", 15).affiche())
 findBugUnion2("much_ado.txt", "coriolanus.txt", 6)

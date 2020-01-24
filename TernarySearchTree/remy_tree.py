@@ -7,7 +7,6 @@ from TernarySearchTree.RemyV2 import print_tree
 from TernarySearchTree.RemyV2 import RemyV2
 
 
-
 class Remy:
     FG = -12
     FD = -13
@@ -130,12 +129,11 @@ def all_val(n):
     for i in range(factN):
         res.append(tab.copy())
         for j in range(n):
-            if(tab[j] < j + 1):
+            if (tab[j] < j + 1):
                 tab[j] += 1
                 break
             else:
                 tab[j] = 0
-
 
     print("res : ", res)
     print("res : ", len(res))
@@ -151,6 +149,7 @@ def all_val(n):
             print("ne fonctionne pas  !!!!!!!!!!!!!!!!!")
     return res
 
+
 def treeToStr(A: ArbreRemy, i=0):
     if A.arbre[i].FG == -1 and A.arbre[i].FD == -1:
         return "eps"
@@ -158,6 +157,7 @@ def treeToStr(A: ArbreRemy, i=0):
         fg = A.arbre[i].FG
         fd = A.arbre[i].FD
         return "(" + treeToStr(A, fg) + ")" + treeToStr(A, fd)
+
 
 def create_all_tree_remy(n):
     nb_loop = 20000
@@ -191,7 +191,8 @@ def create_all_tree(n):
             res[rpz] = res[rpz] + 1
         else:
             res[rpz] = 1
-    return  res
+    return res
+
 
 remy = ArbreRemy(0)
 remy1 = ArbreRemy(10)
