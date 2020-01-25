@@ -22,12 +22,12 @@ class BinaryHeap():
         self.tailleTas = 0
 
     def getMin(self):
-        if (self.estVide()):
+        if self.estVide():
             return None
         return self.tas[1]
 
     def estVide(self):
-        if (self.tailleTas == 0):
+        if self.tailleTas == 0:
             return True
         else:
             return False
@@ -47,7 +47,7 @@ class BinaryHeap():
         tant qu'elle peut faire remontrer cette valeur elle continue.
         """
         while ind != 0:
-            if (self.tas[ind // 2] > (self.tas[ind])):
+            if self.tas[ind // 2] > (self.tas[ind]):
                 tmp = self.tas[ind // 2]
                 self.tas[ind // 2] = self.tas[ind]
                 self.tas[ind] = tmp
@@ -61,16 +61,16 @@ class BinaryHeap():
         tant qu'elle peut faire descendre cette valeur elle continue .
         ind * 2 est le fils droit et ind * 2 +1 le fils gauche
         """
-        while ((ind * 2) <= self.tailleTas):
-            if (ind * 2 + 1 > self.tailleTas):
+        while (ind * 2) <= self.tailleTas:
+            if ind * 2 + 1 > self.tailleTas:
                 minFils = ind * 2
             else:
-                if (self.tas[ind * 2] < (self.tas[ind * 2 + 1])):
+                if self.tas[ind * 2] < (self.tas[ind * 2 + 1]):
                     minFils = ind * 2
                 else:
                     minFils = ind * 2 + 1
 
-            if (self.tas[minFils] < (self.tas[ind])):
+            if self.tas[minFils] < (self.tas[ind]):
                 tmp = self.tas[ind]
                 self.tas[ind] = self.tas[minFils]
                 self.tas[minFils] = tmp
@@ -116,20 +116,20 @@ class BinaryHeap():
         Le parametre vas etre une copie du tas a unir dans le tas actuel juste pour eviter de modifier cette liste avec notre algorithme
         complexité en max(n,m)*log(max(n,m))
         """
-        if (self.estVide() and tas2.estVide()):
+        if self.estVide() and tas2.estVide():
             print("les deux tas son vide Union est vide")
             return
-        elif (self.estVide()):
+        elif self.estVide():
             self.tas = tas2.tas
             self.tailleTas = tas2.tailleTas
             return
-        elif (tas2.estVide()):
+        elif tas2.estVide():
             return
         else:
             tas1Min = self.getMin()
             tas2Min = tas2.getMin()
 
-            if (tas1Min.inf(tas2Min)):
+            if tas1Min.inf(tas2Min):
                 for i in range(1, tas2.getTaille() + 1):
                     add = tas2.tas[i]
                     self.Ajout(add)
@@ -149,27 +149,17 @@ def Union(tas1, tas2):
     """
     Construit l'union entre deux tas
     """
-    if(tas1.estVide() and tas2.estVide()):
+    if tas1.estVide() and tas2.estVide():
         return BinaryHeap()
-    if(tas1.estVide()):
+    if tas1.estVide():
         return tas2
-    if(tas2.estVide()):
+    if tas2.estVide():
         return tas1
     L = tas1.tas[1:]
     L.extend(tas2.tas[1:])
     res = BinaryHeap()
     res.ConsIter(L)
     return res
-
-
-@given(lists(integers()))
-def test_pop_in_sorted_order(ls):
-    h = BinaryHeap()
-    h.ConsIter(ls)
-    r = []
-    while not h.estVide():
-        r.append(h.SupMin())
-    assert r == sorted(ls)
 
 
 """class HeapMachine(RuleBasedStateMachine):
@@ -187,30 +177,3 @@ def test_pop_in_sorted_order(ls):
         correct = self.heap.getMin()
         result = self.heap.SupMin()
         assert correct == result"""
-
-
-class HeapMachine(RuleBasedStateMachine):
-    Heaps = Bundle('heaps')
-
-    @rule(target=Heaps)
-    def newheap(self):
-        return BinaryHeap()
-
-    @rule(heap=Heaps, value=integers())
-    def push(self, heap, value):
-        heap.Ajout(value)
-
-    @rule(heap=Heaps.filter(lambda self: self.estVide() != True))
-    def pop(self, heap):
-        correct = heap.getMin()
-        result = heap.SupMin()
-        assert correct == result
-
-    @rule(target=Heaps, heap1=Heaps, heap2=Heaps)
-    def merge(self, heap1, heap2):
-        res = Union(heap1, heap2)
-        assert res.getTaille() == heap1.getTaille() + heap2.getTaille()
-        return res
-
-
-TestHeaps = HeapMachine.TestCase

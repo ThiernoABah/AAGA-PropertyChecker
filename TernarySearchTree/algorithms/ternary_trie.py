@@ -19,18 +19,16 @@ class Arbre:
         g += ')'
         return g
 
-    def search(self, mot):
-        if mot == '':
-            return False
-        elif len(self.fils) == 0:
-            return False
-        elif mot[0] < self.cle:
-            return self.fils[0].search(mot)
-        elif mot[0] > self.cle:
-            return self.fils[2].search(mot)
-        elif len(mot) == 1:
-            return True if mot[0] == self.cle and self.val == 0 else False
-        return self.fils[1].search(mot[1:])
+    def nbWord(self):
+        g = 0
+        if self.val == 0:
+            g = 1
+            if len(self.fils) == 0:
+                return 1
+
+        for f in self.fils:
+            g += f.nbWord()
+        return g
 
     def get_words(self, prefx):
         words = set()
@@ -40,21 +38,11 @@ class Arbre:
         if self.val == 0:
             words.add(prefx + self.cle)
 
-        words = words.union(self.fils[0].list_of_words(prefx))
-        words = words.union(self.fils[1].list_of_words(prefx + self.cle))
-        words = words.union(self.fils[2].list_of_words(prefx))
+        words = words.union(self.fils[0].get_words(prefx))
+        words = words.union(self.fils[1].get_words(prefx + self.cle))
+        words = words.union(self.fils[2].get_words(prefx))
 
         return words
-
-
-def gener_feuille():
-    return Arbre('', None, [])
-
-
-def gener_noeud(cle, val, F):
-    return Arbre(cle, val, F)
-
-
 def cons(mot):
     if mot == '':
         return gener_feuille()
@@ -80,6 +68,28 @@ def insert(A, mot):
     else:
         val = A.val
         return gener_noeud(A.cle, val, [A.fils[0], A.fils[1], insert(A.fils[2], mot)])
+
+
+def search(self, mot):
+    if mot == '':
+        return False
+    elif len(self.fils) == 0:
+        return False
+    elif mot[0] < self.cle:
+        return self.fils[0].search(mot)
+    elif mot[0] > self.cle:
+        return self.fils[2].search(mot)
+    elif len(mot) == 1:
+        return True if mot[0] == self.cle and self.val == 0 else False
+    return self.fils[1].search(mot[1:])
+
+
+def gener_feuille():
+    return Arbre('', None, [])
+
+
+def gener_noeud(cle, val, F):
+    return Arbre(cle, val, F)
 
 
 def fusion(A, B):

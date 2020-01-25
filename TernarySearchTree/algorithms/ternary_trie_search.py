@@ -132,4 +132,7 @@ def findBugUnion2(filename, filename2, nbMots):
 
 
 # print(construct_ternary_union("much_ado.txt", 15).affiche())
-findBugUnion2("much_ado.txt", "coriolanus.txt", 6)
+# findBugUnion2("much_ado.txt", "coriolanus.txt", 6)
+
+A = construct_ternary("coriolanus.txt", 6)
+print(A.get_words(""))

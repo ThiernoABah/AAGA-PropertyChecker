@@ -1,10 +1,9 @@
 import random
 import math
 import pprint
-from collections import deque
 
-from TernarySearchTree.RemyV2 import print_tree
-from TernarySearchTree.RemyV2 import RemyV2
+from TernarySearchTree.algorithms.RemyV2 import print_tree
+from TernarySearchTree.algorithms.RemyV2 import RemyV2
 
 
 class Remy:
