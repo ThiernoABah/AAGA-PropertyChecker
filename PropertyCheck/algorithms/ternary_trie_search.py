@@ -1,8 +1,5 @@
 import random
 import ternary_trie as T3
-import numpy.random as nr
-
-l_of_words = None
 
 
 def construct_ternary(filename, nbMots):
@@ -30,10 +27,6 @@ def construct_ternary_union(filename, nbMots):
     return tree
 
 
-def sameTree(treeA, treeB):
-    return treeA.affiche() == treeB.affiche()
-
-
 def nbWord(treeA):
     g = 0
     if treeA.val == 0:
@@ -49,39 +42,14 @@ def nbWord(treeA):
 def same(treeA, treeB):
     g = True
     if treeA.val != treeB.val and treeA.cle != treeB.cle:
-        return False
+        return False;
     if len(treeA.fils) != len(treeB.fils):
-        return False
+        return False;
     for a, b in zip(treeA.fils, treeB.fils):
         g = g and same(a, b)
     return g
 
-
-# NE PAS UTILISER
-def findBugUnion(filename, nb_mots):
-    with open("Shakespeare/" + filename) as f:
-        content = f.readlines()
-    candidat = set()
-    i = 0
-    while len(candidat) < nb_mots:
-        candidat.add(content[i][:-1])
-        i = i + 1
-
-    first = candidat.pop()
-    treeInsert = T3.cons(first)
-    treeUnion = T3.cons(first)
-    for m in candidat:
-        if not same(treeUnion, treeInsert):
-            print("not same tree : same(treeUnion, treeInsert)")
-            return
-        if nbWord(treeUnion) != nbWord(treeInsert):
-            print("not same tree : nbWord(treeUnion) != nbWord(treeInsert) ")
-        following = T3.cons(m)
-        treeUnion = T3.fusion(treeUnion, following)
-        treeInsert = T3.insert(treeInsert, m)
-
-
-def findBugUnion2(filename, filename2, nbMots):
+def findBugUnion(filename, filename2, nbMots):
     with open("Shakespeare/" + filename) as f:
         content = f.readlines()
     with open("Shakespeare/" + filename2) as f:
@@ -124,15 +92,10 @@ def findBugUnion2(filename, filename2, nbMots):
     print(treeInsert3.affiche())
     print(treeUnion.affiche())
 
-    print("nbMotsInsert : ", nbMotsInsert)
-    print("nbMotsUnion : ", nbMotsUnion)
+    print(nbMotsInsert)
+    print(nbMotsUnion)
 
-    if nbMotsUnion != nbMotsInsert:
+    if (nbMotsUnion != nbMotsInsert):
         print("not same tree : nbWord(treeUnion) != nbWord(treeInsert) ")
 
-
-# print(construct_ternary_union("much_ado.txt", 15).affiche())
-# findBugUnion2("much_ado.txt", "coriolanus.txt", 6)
-
-A = construct_ternary("coriolanus.txt", 6)
-print(A.get_words(""))
+findBugUnion("much_ado.txt", "coriolanus.txt", 6)
