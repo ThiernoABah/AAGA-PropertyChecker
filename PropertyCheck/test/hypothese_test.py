@@ -6,6 +6,8 @@ def encode(input_string):
     count = 1
     prev = ""
     lst = []
+    if(input_string == ""):
+        return lst
     for character in input_string:
         if character != prev:
             if prev:

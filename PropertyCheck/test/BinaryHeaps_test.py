@@ -2,7 +2,7 @@ from hypothesis import given, example, settings
 from hypothesis.stateful import RuleBasedStateMachine, Bundle, rule
 from hypothesis.strategies import text, lists, integers
 
-from TernarySearchTree.algorithms.BinaryHeap import BinaryHeap, Union
+from PropertyCheck.algorithms.BinaryHeap import BinaryHeap, Union
 
 
 @given(lists(integers()))

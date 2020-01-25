@@ -2,8 +2,8 @@ from hypothesis import given, example, settings
 from hypothesis.stateful import RuleBasedStateMachine, Bundle, rule
 from hypothesis.strategies import text, lists, integers
 
-from TernarySearchTree.algorithms.BinaryHeap import BinaryHeap, Union
-from TernarySearchTree.algorithms.ternary_trie import *
+from PropertyCheck.algorithms.BinaryHeap import BinaryHeap, Union
+from PropertyCheck.algorithms.ternary_trie import *
 
 
 class TSTMachine(RuleBasedStateMachine):
@@ -17,7 +17,7 @@ class TSTMachine(RuleBasedStateMachine):
     def search(self, arbre, mot):
         return search(arbre, mot)
 
-    @rule(arbre=Arbre, mot=text())
+    @rule(arbre=Arbre.filter(lambda self: self != None), mot=text())
     def insert(self, arbre, mot):
         insert(arbre, mot)
         assert search(arbre, mot)

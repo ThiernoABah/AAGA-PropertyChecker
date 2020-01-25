@@ -3,7 +3,7 @@ import ternary_trie as T3
 
 
 def construct_ternary(filename, nbMots):
-    with open("Shakespeare/" + filename) as f:
+    with open("../Shakespeare/" + filename) as f:
         content = f.readlines()
     candidat = set()
     while len(candidat) < nbMots:
@@ -15,7 +15,7 @@ def construct_ternary(filename, nbMots):
 
 
 def construct_ternary_union(filename, nbMots):
-    with open("Shakespeare/" + filename) as f:
+    with open("../Shakespeare/" + filename) as f:
         content = f.readlines()
     candidat = set()
     while len(candidat) < nbMots:
@@ -50,9 +50,9 @@ def same(treeA, treeB):
     return g
 
 def findBugUnion(filename, filename2, nbMots):
-    with open("Shakespeare/" + filename) as f:
+    with open("../Shakespeare/" + filename) as f:
         content = f.readlines()
-    with open("Shakespeare/" + filename2) as f:
+    with open("../Shakespeare/" + filename2) as f:
         content2 = f.readlines()
     candidat = set()
     candidat2 = set()
