@@ -104,43 +104,43 @@ class ArbreRemy:
 
 def all_choice_remy1(n):
     res = list()
-    tab = list()
+    choices = list()
     factN = math.factorial(n + 1)
 
     for i in range(n):
-        tab.append(0)
+        choices.append(0)
 
     for i in range(factN):
-        res.append(tab.copy())
+        res.append(choices.copy())
         for j in range(n):
-            if tab[j] < j + 1:
-                tab[j] += 1
+            if choices[j] < j + 1:
+                choices[j] += 1
                 break
             else:
-                tab[j] = 0
+                choices[j] = 0
     return res
 
 
 def all_choice_remy2(n):
     res = list()
-    tab = list()
-    dico = dict()
+    choices = list()
+    choicesSeen = dict()
 
     for i in range(n - 1):
-        tab.append(0)
+        choices.append(0)
 
-    while str(tab) not in dico:
-        res.append(tab.copy())
-        dico[str(tab)] = 1
+    while str(choices) not in choicesSeen:
+        res.append(choices.copy())
+        choicesSeen[str(choices)] = 1
         for j in range(n):
             if j < n - 1:
-                if tab[j] < j + 2:
-                    tab[j] += 1
+                if choices[j] < j + 2:
+                    choices[j] += 1
                     break
                 else:
-                    tab[j] = 0
+                    choices[j] = 0
             else:
-                tab[j - 1] += 2 * (n - 1)
+                choices[j - 1] += 2 * (n - 1)
     return res
 
 
