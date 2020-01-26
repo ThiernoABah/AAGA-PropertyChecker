@@ -141,6 +141,7 @@ def all_choice_remy2(n):
                     choices[j] = 0
             else:
                 choices[j - 1] += 2 * (n - 1)
+    print(len(res))
     return res
 
 
@@ -159,7 +160,7 @@ def all_pileface(n):
 
 def treeToStr(A: ArbreRemy, i=0):
     if A.arbre[i].FG == -1 and A.arbre[i].FD == -1:
-        return "eps"
+        return ""
     else:
         fg = A.arbre[i].FG
         fd = A.arbre[i].FD
@@ -197,7 +198,7 @@ def create_all_tree_remy2(n):
 
     return res_remy2
 
-size = 3
+size = 2
 remyV1 = create_all_tree_remy1(size)
 remyV2 = create_all_tree_remy2(size)
 print()

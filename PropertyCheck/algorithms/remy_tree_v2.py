@@ -123,5 +123,5 @@ def remy_uniform_complete(n, choixNoeud, pileFace):
 
 def print_tree(A):
     if A.left == False and A.right == False:
-        return "eps"
+        return ""
     return "(" + print_tree(A.left) + ")" + print_tree(A.right)
