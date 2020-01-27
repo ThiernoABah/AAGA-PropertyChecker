@@ -28,7 +28,7 @@ class ArbreRemy:
 
     def __init__(self, N):
         self.arbre = [Node(i) for i in range(2 * N + 1)]
-
+        
     def changeLeaves(self, a, b):
         parentA = self.arbre[a].P
         parentB = self.arbre[b].P

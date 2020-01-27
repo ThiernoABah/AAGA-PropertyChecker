@@ -24,7 +24,9 @@ class BinaryTree(object):
             return "eps"
         return "( " + str(self.left) + " " + str(self.right) + " )"
 
-
+"""
+Génère un arbre de Rémy
+"""
 def remy_uniform_random(n):
     if n == 0:
         return BinaryTree(father=False)
@@ -73,7 +75,9 @@ def remy_uniform_random(n):
 
     return node
 
-
+"""
+Génère un arbre de Rémy où les choix de fils sont pré-déterminés
+"""
 def remy_uniform_complete(n, choixNoeud, pileFace):
     if n == 0:
         return BinaryTree(father=False)

@@ -2,7 +2,10 @@ from RemyProjet import ArbreRemy
 from TernarySearchTree.algorithms.RemyV2 import print_tree
 from remy_tree_v2 import remy_uniform_complete
 
-
+"""
+Renvoie tous les tirages possibles pour l'algorithme de Rémy pour une liste 
+de n éléments
+"""
 def all_choice_remy2(n):
     res = list()
     choices = list()
@@ -35,7 +38,9 @@ print("...................; gen_perm .................;; ")
 def get_bin(x, n=0):
     return format(x, 'b').zfill(n)
 
-
+"""
+Génère tous les résultats possibles de pile ou face pour n tirages
+"""
 def all_pileface(n):
     res = list()
     N = 2 ** (n - 1)
@@ -44,7 +49,9 @@ def all_pileface(n):
         res.append(rpz)
     return res
 
-
+"""
+Crée tous les arbres de Rémy de façon déterministe
+"""
 def create_all_tree_remy2(n):
     pileFaces = all_pileface(n)
     res_remy2 = dict()

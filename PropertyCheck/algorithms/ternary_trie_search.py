@@ -1,7 +1,10 @@
 import random
 from ternary_trie import cons, insert, fusion
 
-
+"""
+Construit itérativement et renvoie l'arbre ternaire contenant nbWords mots 
+tirés aléatoirement dans les oeuvres de Shakespeare 
+"""
 def construct_ternary_file(filename, nbWords):
     with open("../Shakespeare/" + filename) as f:
         content = f.readlines()
@@ -17,7 +20,10 @@ def construct_ternary_file(filename, nbWords):
 
     return tree
 
-
+"""
+Construit par fusion et renvoie l'arbre ternaire contenant nbWords mots tirés
+ aléatoirement dans les oeuvres de Shakespeare 
+"""
 def construct_ternary_union(filename, nbMots):
     with open("../Shakespeare/" + filename) as f:
         content = f.readlines()
@@ -30,7 +36,9 @@ def construct_ternary_union(filename, nbMots):
         tree = fusion(tree, cons(m))
     return tree
 
-
+"""
+Compare treeA et treeB et vérifie s'ils contiennent les mêmes mots
+"""
 def same(treeA, treeB):
     g = True
     if treeA.val != treeB.val and treeA.cle != treeB.cle:
