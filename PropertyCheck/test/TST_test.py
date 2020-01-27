@@ -4,6 +4,7 @@ from hypothesis.strategies import text, lists, integers
 
 from PropertyCheck.algorithms.BinaryHeap import BinaryHeap, Union
 from PropertyCheck.algorithms.ternary_trie import *
+import unittest
 
 
 class TSTMachine(RuleBasedStateMachine):
@@ -17,22 +18,24 @@ class TSTMachine(RuleBasedStateMachine):
     def search(self, arbre, mot):
         return search(arbre, mot)
 
-    @rule(arbre=Arbre.filter(lambda self: self != None), mot=text())
+    @rule(target=Arbre, arbre=Arbre, mot=text(alphabet=('azertyuiopqsdfghjklmwxcvbn'), min_size=1))
     def insert(self, arbre, mot):
-        insert(arbre, mot)
-        assert search(arbre, mot)
+        res = insert(arbre, mot)
+        assert search(res, mot)
+        return res
 
     @rule(target=Arbre, a=Arbre, b=Arbre)
     def fusion(self, a, b):
         a_b = fusion(a, b)
         words_a_b = a.get_words("").union(b.get_words(""))
 
-        # for word in words_a_b:
-        #    nb = (nb + 1) if search(a_b, word) else nb
-        # assert nb == len(words_a_b)
-
         for word in words_a_b:
             assert search(a_b, word)
+        return a_b
 
 
 TestTernary = TSTMachine.TestCase
+if __name__ == '__main__':
+    unittest.main()
+
+print(TestTernary)

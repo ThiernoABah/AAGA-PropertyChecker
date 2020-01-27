@@ -66,7 +66,7 @@ def remy_uniform_random(n):
         idNodeTree.append(leaf)
         k = k + 1
 
-    #On veux retourner la racine de l'arbre
+    # On veux retourner la racine de l'arbre
     node = idNodeTree[0]
     while node.father:
         node = node.father

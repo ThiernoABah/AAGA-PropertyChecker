@@ -1,20 +1,14 @@
 import random
-import math
+from collections import defaultdict
 import pprint
 
-from remy_tree_v2 import *
 
+class Node:
 
-class Remy:
-    FG = -12
-    FD = -13
-    P = -14
-    num = -1
-
-    def __init__(self, FG, FD, P, num):
-        self.FG = FG
-        self.FD = FD
-        self.P = P
+    def __init__(self, num):
+        self.FG = -1
+        self.FD = -1
+        self.P = -1
         self.num = num
 
     def __str__(self):
@@ -24,7 +18,7 @@ class Remy:
         return "Num : " + str(self.num) + " P : " + str(self.P) + " FG : " + str(self.FG) + " FD : " + str(self.FD)
 
     def __eq__(self, other):
-        if not isinstance(other, Remy):
+        if not isinstance(other, Node):
             return False
         return self.num == other.num and self.P == other.P and self.FG == other.FG and self.FD == other.FD
 
@@ -33,7 +27,7 @@ class ArbreRemy:
     arbre = None
 
     def __init__(self, N):
-        self.arbre = [Remy(-1, -1, -1, i) for i in range(2 * N + 1)]
+        self.arbre = [Node(i) for i in range(2 * N + 1)]
 
     def changeLeaves(self, a, b):
         parentA = self.arbre[a].P
@@ -95,6 +89,7 @@ class ArbreRemy:
             self.arbre[2 * i - 1].P = self.arbre[2 * i].P = i - 1
             self.arbre[2 * i - 1].FD = self.arbre[2 * i - 1].FG = -1
             self.arbre[2 * i].FD = self.arbre[2 * i].FG = -1
+        return self
 
     def __eq__(self, other):
         if not isinstance(other, ArbreRemy):
@@ -102,63 +97,24 @@ class ArbreRemy:
         return self.arbre == other.arbre
 
 
-def all_choice_remy1(n):
-    res = list()
-    choices = list()
-    factN = math.factorial(n + 1)
-
-    for i in range(n):
-        choices.append(0)
-
-    for i in range(factN):
-        res.append(choices.copy())
-        for j in range(n):
-            if choices[j] < j + 1:
-                choices[j] += 1
-                break
-            else:
-                choices[j] = 0
+def gen_perms(n: int, i: int) -> [[]]:
+    if n < i:
+        return [[]]
+    elements = gen_perms(n, i + 1)
+    res = []
+    for i in range(i):
+        for ele in elements:
+            tmp = ele.copy()
+            tmp.insert(0, i)
+            res.append(tmp)
     return res
 
 
-def all_choice_remy2(n):
-    res = list()
-    choices = list()
-    choicesSeen = dict()
-
-    for i in range(n - 1):
-        choices.append(0)
-
-    while str(choices) not in choicesSeen:
-        res.append(choices.copy())
-        choicesSeen[str(choices)] = 1
-        for j in range(n):
-            if j < n - 1:
-                if choices[j] < j + 2:
-                    choices[j] += 1
-                    break
-                else:
-                    choices[j] = 0
-            else:
-                choices[j - 1] += 2 * (n - 1)
-    print(len(res))
-    return res
+def gen_perm(n: int) -> [[]]:
+    return gen_perms(n, 2)
 
 
-def get_bin(x, n=0):
-    return format(x, 'b').zfill(n)
-
-
-def all_pileface(n):
-    res = list()
-    N = 2 ** (n - 1)
-    for i in range(N):
-        rpz = [int(char) for char in get_bin(i, (n - 1))]
-        res.append(rpz)
-    return res
-
-
-def treeToStr(A: ArbreRemy, i=0):
+def treeToStr(A: ArbreRemy, i: int = 0) -> str:
     if A.arbre[i].FG == -1 and A.arbre[i].FD == -1:
         return ""
     else:
@@ -167,43 +123,12 @@ def treeToStr(A: ArbreRemy, i=0):
         return "(" + treeToStr(A, fg) + ")" + treeToStr(A, fd)
 
 
-def create_all_tree_remy1(n):
-    res = dict()
-
-    for perm in all_choice_remy1(n):
+def generate_all_trees_remy1(n: int) -> dict:
+    dict = defaultdict(int)
+    for i in gen_perm(n):
         tree = ArbreRemy(n)
-
-        tree.growingTreeComplete(n, perm)
-        rpz = treeToStr(tree)
-        if rpz in res:
-            res[rpz] = res[rpz] + 1
-        else:
-            res[rpz] = 1
-    return res
+        dict[treeToStr(tree.growingTreeComplete(n, i))] += 1
+    return dict
 
 
-def create_all_tree_remy2(n):
-    pileFaces = all_pileface(n)
-    res_remy2 = dict()
-    i = 0
-    for perm in all_choice_remy2(n):
-        for pf in pileFaces:
-            tree_remy_v2 = remy_uniform_complete(n, perm, pf)
-            rpz2 = print_tree(tree_remy_v2)
-            if rpz2 in res_remy2:
-                res_remy2[rpz2] = res_remy2[rpz2] + 1
-            else:
-                res_remy2[rpz2] = 1
-            i += 1
-
-    return res_remy2
-
-size = 2
-remyV1 = create_all_tree_remy1(size)
-remyV2 = create_all_tree_remy2(size)
-print()
-print("here all tree of size ",size,"generate for all possible inputs using the first algorithm")
-pprint.pprint(remyV1)
-print()
-print("here all tree of size ",size,"generate for all possible inputs using our algorithm")
-pprint.pprint(remyV2)
+pprint.pprint(generate_all_trees_remy1(2))

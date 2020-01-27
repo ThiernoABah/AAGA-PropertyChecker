@@ -1,5 +1,6 @@
 NB = 0
 
+
 class Arbre:
     def __init__(self, cle, val, F):
         global NB
@@ -42,6 +43,8 @@ class Arbre:
         words = words.union(self.fils[2].get_words(prefx))
 
         return words
+
+
 def cons(mot):
     if mot == '':
         return gener_feuille()
@@ -69,18 +72,18 @@ def insert(A, mot):
         return gener_noeud(A.cle, val, [A.fils[0], A.fils[1], insert(A.fils[2], mot)])
 
 
-def search(self, mot):
+def search(A, mot):
     if mot == '':
         return False
-    elif len(self.fils) == 0:
+    elif len(A.fils) == 0:
         return False
-    elif mot[0] < self.cle:
-        return self.fils[0].search(mot)
-    elif mot[0] > self.cle:
-        return self.fils[2].search(mot)
+    elif mot[0] < A.cle:
+        return search(A.fils[0], mot)
+    elif mot[0] > A.cle:
+        return search(A.fils[2], mot)
     elif len(mot) == 1:
-        return True if mot[0] == self.cle and self.val == 0 else False
-    return self.fils[1].search(mot[1:])
+        return True if mot[0] == A.cle and A.val == 0 else False
+    return search(A.fils[1], mot[1:])
 
 
 def gener_feuille():
