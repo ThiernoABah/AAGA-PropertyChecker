@@ -1,3 +1,5 @@
+import unittest
+
 from hypothesis import given, example, settings
 from hypothesis.stateful import RuleBasedStateMachine, Bundle, rule
 from hypothesis.strategies import text, lists, integers
@@ -40,3 +42,7 @@ class HeapMachine(RuleBasedStateMachine):
 
 
 TestHeaps = HeapMachine.TestCase
+if __name__ == '__main__':
+    unittest.main()
+
+print(TestHeaps)

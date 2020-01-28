@@ -1,11 +1,16 @@
 import random
 from ternary_trie import cons, insert, fusion
 
-"""
-Construit itérativement et renvoie l'arbre ternaire contenant nbWords mots 
-tirés aléatoirement dans les oeuvres de Shakespeare 
-"""
+
 def construct_ternary_file(filename, nbWords):
+    """
+    Construit itérativement et renvoie l'arbre ternaire contenant nbWords mots
+    tirés aléatoirement dans les oeuvres de Shakespeare
+    :param filename: un fichier de données
+    :param nbWords: nombre de mots à utiliser
+    :return: un arbre contenant les mots sélectionner dans le fichier
+    """
+
     with open("../Shakespeare/" + filename) as f:
         content = f.readlines()
     words = set()
@@ -20,11 +25,20 @@ def construct_ternary_file(filename, nbWords):
 
     return tree
 
+
 """
-Construit par fusion et renvoie l'arbre ternaire contenant nbWords mots tirés
- aléatoirement dans les oeuvres de Shakespeare 
+et 
 """
+
+
 def construct_ternary_union(filename, nbMots):
+    """
+    Construit par fusion
+    :param filename:
+    :param nbMots: nombre de mots à rajouter
+    :return: renvoie l'arbre ternaire contenant nbWords mots tirés
+                aléatoirement dans les oeuvres de Shakespeare
+    """
     with open("../Shakespeare/" + filename) as f:
         content = f.readlines()
     candidat = set()
@@ -36,10 +50,15 @@ def construct_ternary_union(filename, nbMots):
         tree = fusion(tree, cons(m))
     return tree
 
-"""
-Compare treeA et treeB et vérifie s'ils contiennent les mêmes mots
-"""
+
 def same(treeA, treeB):
+    """
+    Compare deux arbre tairnaire et vérifie s'ils contiennent les mêmes mots
+
+    :param treeA: arbre ternaire
+    :param treeB: arbre ternaire
+    :return: true si treeA = treeB, false dans le cas contraire
+    """
     g = True
     if treeA.val != treeB.val and treeA.cle != treeB.cle:
         return False
@@ -48,5 +67,3 @@ def same(treeA, treeB):
     for a, b in zip(treeA.fils, treeB.fils):
         g = g and same(a, b)
     return g
-
-

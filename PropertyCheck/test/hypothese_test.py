@@ -6,8 +6,6 @@ def encode(input_string):
     count = 1
     prev = ""
     lst = []
-    if(input_string == ""):
-        return lst
     for character in input_string:
         if character != prev:
             if prev:
@@ -34,8 +32,6 @@ def average_agreement(list1, list2, max_depth):
     if (not list1) or (not list2):
         return 0.0
 
-    ### NEW CODE ###
-    # Truncate the depth
     max_list_len = max(len(list1), len(list2))
     max_depth = min(max_depth, max_list_len)
 
@@ -57,7 +53,7 @@ def average_agreement(list1, list2, max_depth):
     list2=lists(integers(min_value=1)),
     depth=integers(min_value=1)
 )
-@settings(deadline=300)  # <- NEW CODE
+@settings(deadline=300)
 def test_average_agreement_properties(list1, list2, depth):
     answer = average_agreement(list1, list2, depth)
     inverse_answer = average_agreement(list2, list1, depth)

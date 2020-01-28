@@ -1,6 +1,12 @@
 import random
 from collections import defaultdict
-import pprint
+
+"""
+Fichier contenant l'algorithime de Remy fourni et 
+    la méthode qui permet de générer les toutes les permutations possible 
+        pour les arbre de taille n 
+    la méthode qui permet de générer tous les arbres possible de taille n
+"""
 
 
 class Node:
@@ -28,7 +34,7 @@ class ArbreRemy:
 
     def __init__(self, N):
         self.arbre = [Node(i) for i in range(2 * N + 1)]
-        
+
     def changeLeaves(self, a, b):
         parentA = self.arbre[a].P
         parentB = self.arbre[b].P
@@ -45,10 +51,7 @@ class ArbreRemy:
 
     def growingTree(self, n):
         if n == 0:
-            return
-        elif n == 1:
-            self.arbre[0].num = 1
-            return
+            return self
 
         self.arbre[0].FG = 1
         self.arbre[0].FD = 2
@@ -69,10 +72,7 @@ class ArbreRemy:
 
     def growingTreeComplete(self, n, liste):
         if n == 0:
-            return
-        elif n == 1:
-            self.arbre[0].num = 1
-            return
+            return self
 
         self.arbre[0].FG = 1
         self.arbre[0].FD = 2
@@ -89,6 +89,7 @@ class ArbreRemy:
             self.arbre[2 * i - 1].P = self.arbre[2 * i].P = i - 1
             self.arbre[2 * i - 1].FD = self.arbre[2 * i - 1].FG = -1
             self.arbre[2 * i].FD = self.arbre[2 * i].FG = -1
+
         return self
 
     def __eq__(self, other):
@@ -118,17 +119,19 @@ def treeToStr(A: ArbreRemy, i: int = 0) -> str:
     if A.arbre[i].FG == -1 and A.arbre[i].FD == -1:
         return ""
     else:
-        fg = A.arbre[i].FG
-        fd = A.arbre[i].FD
-        return "(" + treeToStr(A, fg) + ")" + treeToStr(A, fd)
+        return "(" + treeToStr(A, A.arbre[i].FG) + ")" + treeToStr(A, A.arbre[i].FD)
 
 
-def generate_all_trees_remy1(n: int) -> dict:
-    dict = defaultdict(int)
+def create_all_tree_remy1(n: int) -> dict:
+    dict_result = defaultdict(int)
     for i in gen_perm(n):
         tree = ArbreRemy(n)
-        dict[treeToStr(tree.growingTreeComplete(n, i))] += 1
-    return dict
+        dict_result[treeToStr(tree.growingTreeComplete(n, i))] += 1
+    return dict_result
 
 
-pprint.pprint(generate_all_trees_remy1(2))
+def generate_all_trees(n):
+    for i in range(n + 1):
+        print("Taille ", i, " : ", create_all_tree_remy1(i).items())
+
+# generate_all_trees(5)

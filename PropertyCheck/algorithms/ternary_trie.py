@@ -6,6 +6,8 @@ Le fils gauche du noeud courant à une valeur de caractère inférieure, le fils
 droit une valeur supérieure et le fils égale contient le caractère formant la 
 suite du mot
 """
+
+
 class Arbre:
     def __init__(self, cle, val, F):
         global NB
@@ -49,9 +51,12 @@ class Arbre:
 
         return words
 
+
 """
 Construit l'arbre ternaire associé au paramètre mot donné à la fonction
 """
+
+
 def cons(mot):
     if mot == '':
         return gener_feuille()
@@ -61,9 +66,12 @@ def cons(mot):
         else:
             return gener_noeud(mot[0], None, [gener_feuille(), cons(mot[1:]), gener_feuille()])
 
+
 """
 Insère le mot donné en paramètre dans l'arbre A
 """
+
+
 def insert(A, mot):
     if mot == '':
         return A
@@ -80,11 +88,15 @@ def insert(A, mot):
         val = A.val
         return gener_noeud(A.cle, val, [A.fils[0], A.fils[1], insert(A.fils[2], mot)])
 
-"""
-Cherche le mot donné en paramètre dans l'arbre A et renvoie True si il y est 
-présent, False sinon
-"""
+
 def search(A, mot):
+    """
+    Cherche le mot donné en paramètre dans l'arbre A et renvoie True si il y est
+    présent, False sinon
+    A : arbre
+    mot : mot à chercher
+    """
+
     if mot == '':
         return False
     elif len(A.fils) == 0:
@@ -97,22 +109,28 @@ def search(A, mot):
         return True if mot[0] == A.cle and A.val == 0 else False
     return search(A.fils[1], mot[1:])
 
-"""
-Renvoie l'arbre ne contenant que le mot vide
-"""
+
 def gener_feuille():
+    """
+    Renvoie l'arbre ne contenant que le mot vide
+    """
     return Arbre('', None, [])
 
-"""
-Génère un arbre contenant à sa racine le caractère clé donné en paramètre
-"""
+
 def gener_noeud(cle, val, F):
+    """
+    Génère un arbre contenant à sa racine le caractère clé donné en paramètre
+    """
     return Arbre(cle, val, F)
 
-"""
-Renvoie l'arbre résultant de la fusion des arbres A et B
-"""
+
 def fusion(A, B):
+    """
+    permet de faire la fusion entre de arbres ternaire
+    :param A: Arbre ternaire
+    :param B: Arbre ternaire
+    :return: Renvoie l'arbre résultant de la fusion des arbres A et B
+    """
     if A.cle == '':
         return B
     if B.cle == '':

@@ -1,7 +1,6 @@
-from hypothesis.strategies import integers, lists
-from hypothesis.stateful import rule, precondition, RuleBasedStateMachine, Bundle
-from hypothesis import given
-
+"""
+Fichier pour la structure de données "BinaryHeap"
+"""
 
 class BinaryHeap():
     """La classe BinaryHeap represente un tas min dont les données
@@ -118,54 +117,14 @@ def Union(tas1, tas2):
     """
     Construit l'union entre deux tas
     """
-    if(tas1.estVide() and tas2.estVide()):
+    if (tas1.estVide() and tas2.estVide()):
         return BinaryHeap()
-    if(tas1.estVide()):
+    if (tas1.estVide()):
         return tas2
-    if(tas2.estVide()):
+    if (tas2.estVide()):
         return tas1
     L = tas1.tas[1:]
     L.extend(tas2.tas[1:])
     res = BinaryHeap()
     res.ConsIter(L)
     return res
-
-
-@given(lists(integers()))
-def test_pop_in_sorted_order(ls):
-    h = BinaryHeap()
-    h.ConsIter(ls)
-    r = []
-    while not h.estVide():
-        r.append(h.SupMin())
-    assert r == sorted(ls)
-
-
-
-class HeapMachine(RuleBasedStateMachine):
-    Heaps = Bundle('heaps')
-
-    @rule(target=Heaps)
-    def newheap(self):
-        return BinaryHeap()
-
-    @rule(heap=Heaps, value=integers())
-    def push(self, heap, value):
-        heap.Ajout(value)
-
-    @rule(heap=Heaps.filter(lambda self: self.estVide() != True))
-    def pop(self, heap):
-        correct = heap.getMin()
-        result = heap.SupMin()
-        assert correct == result
-
-    @rule(target=Heaps, heap1=Heaps, heap2=Heaps)
-    def merge(self, heap1, heap2):
-        res = Union(heap1, heap2)
-        assert res.getTaille() == heap1.getTaille() + heap2.getTaille()
-        return res
-
-TestHeaps = HeapMachine.TestCase
-
-
-# peut etre lancer avec pytest BinaryHeap.py
